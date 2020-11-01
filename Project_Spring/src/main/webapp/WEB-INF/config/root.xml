@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- DataSource 설정 -->
+	<context:property-placeholder location="classpath:database.properties"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+		p:driverClassName="${jdbc.driver}"
+		p:url="${jdbc.url}"
+		p:username="${jdbc.username}"
+		p:password="${jdbc.password}"/>
+	
+	
+	<!-- 	Spring JDBC설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource"/>
+		
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource" p:configLocation="classpath:config/SqlMapConfig.xml"/>
+		
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+		
+	
+</beans>

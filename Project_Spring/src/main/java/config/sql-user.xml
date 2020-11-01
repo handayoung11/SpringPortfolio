@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="user">
+ 	<resultMap id="userResult" type="UserVO">
+ 		<result property="idx" column="idx"></result>
+ 		<result property="userID" column="id"></result>
+ 		<result property="userpw" column="pw"></result>
+ 		<result property="uname" column="name"></result>
+ 		<result property="uemail" column="email"></result>
+ 		<result property="ustat" column="stat"></result>
+ 		<result property="uauth" column="auth"></result>
+ 	</resultMap>
+ 	
+ 	<insert id="addUser" parameterType="UserVO">
+ 		insert into USERS(idx, name, id, pw, email, stat, auth) 
+ 		values(USER_SEQ.nextval, #{uname}, #{userID}, #{userpw},#{uemail}, #{ustat}, #{uauth})
+ 	</insert>
+ 	
+ 	<update id="updateUser" parameterType="UserVO">
+ 		update USERS set 
+ 		name=#{uname}, id = #{userID}, pw = #{userpw}, email = #{uemail}, stat = #{ustat}, auth = #{uauth} where idx = #{idx}
+ 	</update>
+ 	
+ 	<delete id="deleteUser" parameterType="int">
+ 		delete from USERS where idx = #{idx}
+ 	</delete>
+ 	
+ 	<select id="getUser" parameterType="int" resultMap="userResult">
+ 		select * from USERS where idx = #{idx}
+ 	</select>
+ 	
+ 	<select id="getLoger" parameterType="UserVO" resultMap="userResult">
+ 		select * from USERS where id = #{userID} and pw = #{userpw}
+ 	</select>
+ 	
+ 	<select id="getUserList" resultMap="userResult">
+		select * from USERS order by idx asc 	
+ 	</select>
+ </mapper>

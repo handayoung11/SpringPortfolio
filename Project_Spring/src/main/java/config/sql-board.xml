@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="board">
+ 	<resultMap id="boardResult" type="BoardVO">
+ 		<result property="bidx" column="idx"></result>
+ 		<result property="btitle" column="title"></result>
+ 		<result property="bwriter" column="writer"></result>
+ 		<result property="bwriterName" column="NAME"></result>
+ 		<result property="bcontent" column="content"></result>
+ 		<result property="bdate" column="regdate"></result>
+ 		<result property="bsee" column="see"></result>
+ 	</resultMap>
+ 	
+ 	<insert id="insertBoard" parameterType="BoardVO">
+	 	insert into BOARD(idx, title, writer, content, regdate, see) values(BOARD_SEQ.nextval, #{btitle}, #{bwriter}, #{bcontent}, sysdate, 0)
+ 	</insert>
+ 	<update id="updateBoard" parameterType="BoardVO">
+		update BOARD set title=#{btitle}, writer = #{bwriter}, content = #{bcontent} where idx = #{bidx}
+ 	</update>
+ 	<delete id="deleteBoard" parameterType="int">
+		delete from BOARD where idx = #{bidx}
+ 	</delete>
+ 	<select id="getBoard" parameterType="int" resultMap="boardResult">
+		select * from BOARD_USERS where idx = #{bidx}
+ 	</select>
+ 	<select id="getBoardList" resultMap="boardResult">
+		select * from BOARD_USERS order by regdate desc
+ 	</select>
+ </mapper>

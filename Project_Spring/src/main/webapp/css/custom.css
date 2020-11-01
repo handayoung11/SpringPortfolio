@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.center{
+	margin: auto;
+}
+
+.btn-margin{
+    margin-right: 10;
+    margin-left: 10;
+}
